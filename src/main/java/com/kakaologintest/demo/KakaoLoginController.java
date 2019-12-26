@@ -13,9 +13,15 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class KakaoLoginController {
 
+    private JsonNode access_token  = null;
     @GetMapping("/")
     public String home() {
         return "home";
+    }
+
+    @GetMapping("/messagelink")
+    public String messagelink() {
+        return "MessageLink";
     }
 
     @RequestMapping(value = "/oauth", produces = "application/json")
@@ -28,10 +34,11 @@ public class KakaoLoginController {
         JsonNode node = kr.getAccessToken(code);
 
         System.out.println(node);
-        JsonNode token = node.get("access_token");
-        session.setAttribute("token", token.asText());
+        access_token = node.get("access_token");
 
-        JsonNode userInfo = kr.getUserInfo(token);
+        session.setAttribute("token", access_token.asText());
+
+        JsonNode userInfo = kr.getUserInfo(access_token);
 
         String id = userInfo.get("id").toString();
         String nickname = null;
@@ -71,7 +78,7 @@ public class KakaoLoginController {
         session.setAttribute("profileImage",profileImage);
         session.setAttribute("email",email);
 
-
+        JsonNode result = kr.sendTextMsgToMe(access_token);
 
         return "logininfo";
     }
