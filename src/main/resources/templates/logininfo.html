@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{/pageLayout/defaultPageLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인인포</title>
+</head>
+<body>
+<!-- 세션에서 token을 가져와서 출력한다. -->
+<p th:text="${session.token}">token</p><br>
+<p th:text="${session.id}">id</p><br>
+<p th:text="${session.nickname}">nickname</p><br>
+<p th:text="${session.thumbnailImage}">thumbnailImage</p><br>
+<img th:src="${session.thumbnailImage}"/>
+<p th:text="${session.profileImage}">profileImage</p><br>
+<img th:src="${session.profileImage}"/>
+<p th:text="${session.email}">email</p><br>
+</body>
+</html>
